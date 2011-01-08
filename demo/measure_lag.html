@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Measure Click Input Lag</title>
+	<style type="text/css">
+	body{font-size:10px;}
+	#results p{
+		font-size:1.2em;
+		margin:0;
+	}
+	</style>
+</head>
+<body>
+	<button id="just_some_id" class="start_test">Log Event</button>
+	<button class="clear_results">Clear</button>
+	<div id="results"></div>
+	<script type="text/javascript" src="../src/touchdown.js"></script>
+	<script type="text/javascript">
+	var results = document.getElementById('results'),
+		main_button = document.getElementById('just_some_id'),
+		events = ['click', 'touchstart', 'touchend'],
+		first_event_time = null;
+
+	function logEvent(msg) {
+		var t = +new Date,
+			node = document.createElement('p');
+
+		if (first_event_time == null) {
+			first_event_time = t;
+		}
+		node.innerHTML = msg + ': ' + (t - first_event_time) + 'ms';
+		results.appendChild(node);
+	}
+
+	for (var i = 0, l = events.length; i < l; i++) {
+		main_button.addEventListener(events[i], function(e){
+			logEvent(e.type);
+		}, false);
+	}
+
+	touchdown('start_test', function(e, n){
+		logEvent('touchdown');
+	});
+
+	touchdown('clear_results', function(e, n){
+		results.innerHTML = '';
+		first_event_time = null;
+	});
+	</script>
+</body>
+</html>
