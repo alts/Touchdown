@@ -17,7 +17,6 @@
 					for (class_key in bound) {
 						var info = bound[class_key];
 						if (hasClass(n, class_key) && !info.touch) {
-							console.log(class_key);
 							for (var i = 0, l = info.callbacks.length; i < l; i++) {
 								info.callbacks[i](e, n);
 							}
