@@ -1,7 +1,8 @@
 (function(window) {
 	var bound = {},
 		touches = [],
-		touchdown_on = false;
+		touchdown_on = false,
+		listen_to_moves = false;
 
 	function hasClass(node, class_name) {
 		return (' ' + node.className + ' ').replace(/[\n\r\t]/g, ' ')
@@ -31,11 +32,16 @@
 						var info = bound[class_key];
 						if (hasClass(n, class_key)) {
 							info.touch = e;
-							info.reset_timer = setTimeout(function(){
-								info.touch = null;
-							}, 500);
+							info.time = +new Date;
+							listen_to_moves = true;
 						}
 					}
+				}
+			}, false);
+
+			document.body.addEventListener('touchmove', function(e) {
+				if (listen_to_moves) {
+
 				}
 			}, false);
 
@@ -43,20 +49,26 @@
 				for (var n = e.target; n.nodename != 'BODY'; n = n.parentNode) {
 					for (class_key in bound) {
 						var info = bound[class_key],
-							event = info.touch;
+							event = info.touch,
+							now = +new Date;
+
 						if (hasClass(n, class_key) && event) {
-							clearTimeout(info.reset_timer);
+							listen_to_moves = false;
+							if (info.time && now < info.time + 500) {
+								for (var i = 0, l = info.callbacks.length; i < l; i++) {
+									info.callbacks[i]({
+										type: 'touchdown',
+										start: event,
+										end: e
+									}, n);
+								}
+							} else {
+								info.time = null;
+							}
+
 							setTimeout(function(){
 								info.touch = null;
 							}, 500);
-
-							for (var i = 0, l = info.callbacks.length; i < l; i++) {
-								info.callbacks[i]({
-									type: 'touchdown',
-									start: event,
-									end: e
-								}, n);
-							}
 						}
 					}
 				}
@@ -66,7 +78,7 @@
 		bound[class_name] = bound[class_name] || {
 			callbacks:[],
 			touch:null,
-			reset_timer:null
+			time:null
 		};
 		bound[class_name].callbacks.push(callback);
 	}
