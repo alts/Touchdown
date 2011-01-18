@@ -47,10 +47,6 @@
 		results.appendChild(node);
 	}
 
-	function fullLog(o) {
-		log(o);
-	}
-
 	/*
 	for (var i = 0, l = events.length; i < l; i++) {
 		main_button.addEventListener(events[i], function(e){
@@ -60,10 +56,7 @@
 	*/
 
 	touchdown('start_test', function(e, n){
-		fullLog({name: 'start'});
-		fullLog(e);
-		fullLog({name: 'end'});
-		fullLog(e);
+		log(e.type);
 	});
 
 	touchdown('clear_results', function(e, n){
