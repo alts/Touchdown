@@ -48,6 +48,7 @@
 							info.touch = e;
 							info.time = +new Date;
 							listen_to_moves = true;
+							clearTimeout(info.timer);
 						}
 					}
 				}
@@ -82,7 +83,7 @@
 								info.time = null;
 							}
 
-							setTimeout(function(){
+							info.timer = setTimeout(function(){
 								info.touch = null;
 								last_move = null;
 							}, 500);
@@ -95,7 +96,8 @@
 		bound[class_name] = bound[class_name] || {
 			callbacks:[],
 			touch:null,
-			time:null
+			time:null,
+			timer:null
 		};
 		bound[class_name].callbacks.push(callback);
 	}
