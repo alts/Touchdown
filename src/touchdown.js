@@ -83,6 +83,13 @@
 								info.time = null;
 							}
 
+							n.style.webkitTapHighlightColor = 'rgba(0,0,0,0)';
+
+							// we need the current form of n for this
+							setTimeout((function(n){ return function(){
+								n.style.webkitTapHighlightColor = '';
+							}})(n), 500);
+
 							info.timer = setTimeout(function(){
 								info.touch = null;
 								last_move = null;
