@@ -28,7 +28,7 @@
 			touchdown_on = true;
 
 			document.body.addEventListener('click', function(e) {
-				for (var n = e.target; n.nodeName != 'BODY'; n = n.parentNode) {
+				for (var n = e.target; n.nodeName != 'BODY' && n.parentNode; n = n.parentNode) {
 					for (class_key in bound) {
 						var info = bound[class_key];
 						if (hasClass(n, class_key) && !info.touch) {
@@ -41,7 +41,7 @@
 			}, false);
 
 			document.body.addEventListener('touchstart', function(e) {
-				for (var n = e.target; n.nodename != 'BODY'; n = n.parentNode) {
+				for (var n = e.target; n.nodename != 'BODY' && n.parentNode; n = n.parentNode) {
 					for (class_key in bound) {
 						var info = bound[class_key];
 						if (hasClass(n, class_key)) {
@@ -61,7 +61,7 @@
 			}, false);
 
 			document.body.addEventListener('touchend', function(e) {
-				for (var n = e.target; n.nodename != 'BODY'; n = n.parentNode) {
+				for (var n = e.target; n.nodename != 'BODY' && n.parentNode; n = n.parentNode) {
 					for (class_key in bound) {
 						var info = bound[class_key],
 							event = info.touch,
