@@ -14,20 +14,6 @@
 	<button id="just_some_id" class="start_test">Log Event</button>
 	<button class="clear_results">Clear</button>
 	<div id="results"></div>
-	<script type="text/javascript">
-	var results = document.getElementById('results');
-	function log(o) {
-		if (typeof o != 'object') {
-			o = {value: o};
-		}
-
-		for (prop in o) {
-			node = document.createElement('p');
-			node.innerHTML = prop + ': ' + o[prop];
-			results.appendChild(node);
-		}
-	}
-	</script>
 	<script type="text/javascript" src="../src/touchdown.js"></script>
 	<script type="text/javascript">
 	var results = document.getElementById('results'),
@@ -47,16 +33,14 @@
 		results.appendChild(node);
 	}
 
-	/*
 	for (var i = 0, l = events.length; i < l; i++) {
 		main_button.addEventListener(events[i], function(e){
 			logEvent(e.type);
 		}, false);
 	}
-	*/
 
 	touchdown('start_test', function(e, n){
-		log(e.type);
+		logEvent('touchdown');
 	});
 
 	touchdown('clear_results', function(e, n){
