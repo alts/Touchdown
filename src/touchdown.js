@@ -1,6 +1,7 @@
 (function(window) {
 	// constants
-	var EVENT_WINDOW = 500,
+	var _VERSION = '1.0',
+		EVENT_WINDOW = 500,
 		TOUCH_RANGE = 1;
 
 	var bound = {},
@@ -23,7 +24,7 @@
 			p2.screenY > p1.screenY - range && p2.screenY < p1.screenY + range;
 	}
 
-	window.touchdown = function(class_name, callback) {
+	function touchdown(class_name, callback) {
 		if (!touchdown_on) {
 			touchdown_on = true;
 
@@ -108,4 +109,7 @@
 		};
 		bound[class_name].callbacks.push(callback);
 	}
+
+	touchdown.VERSION = _VERSION;
+	window.touchdown = touchdown;
 })(this);
